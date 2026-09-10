@@ -4,8 +4,8 @@
     {
         static void Main(string[] args)
         {
-            UniversityManager UniversityManagement = new UniversityManager();
-            UniversityManagement.Show();
+            UniversityManager Manager = new UniversityManager();
+            Manager.Show();
 
         }
     }
