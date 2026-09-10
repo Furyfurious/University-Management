@@ -9,8 +9,6 @@ namespace LINQ
     public class UniversityManager
     {
         public List<University> Universities = new List<University>();
-
-
         public List<Students> Students = new List<Students>();
 
         public UniversityManager()
@@ -112,6 +110,7 @@ namespace LINQ
             IEnumerable<Students> MaleStudents = from student in Students
                                                  where student.Gender == "Male" || student.Gender == "male"
                                                  select student;
+
             Console.WriteLine("Male - Students: ");
 
             foreach(var student in MaleStudents)
@@ -127,6 +126,7 @@ namespace LINQ
             IEnumerable<Students> femaleStudents = from student in Students
                                                    where student.Gender == "Female"
                                                    select student;
+
             foreach(var student in femaleStudents)
             {
                 student.Print();
@@ -303,5 +303,9 @@ namespace LINQ
                     }
             }
         }
+    }
+
+    public class DataHandling
+    {
     }
 }
