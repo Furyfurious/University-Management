@@ -5,7 +5,7 @@
         static void Main(string[] args)
         {
             UniversityManager UniversityManagement = new UniversityManager();
-            UniversityManagement.Menu();
+            UniversityManagement.Show();
 
         }
     }
