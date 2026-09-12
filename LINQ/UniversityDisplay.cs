@@ -31,7 +31,7 @@ namespace LINQ
 
                 Console.WriteLine();
 
-                string[] choice = { "Add University", "Add Student", "Show Student", "Show all Universities", "Exit" };
+                string[] choice = { "Add University", "Add Student", "Show Student", "Show all Universities","Delete Student/University","Sort students", "Exit" };
 
                 for (int i = 0; i < choice.Length; i++)
                 {
@@ -45,7 +45,7 @@ namespace LINQ
 
                 Console.WriteLine();
 
-                Console.Write("Select (1-5) : ");
+                Console.Write("Select (1-7) : ");
                 string decision = Console.ReadLine();
                 try
                 {
@@ -84,6 +84,16 @@ namespace LINQ
                             }
                         case 5:
                             {
+                                DeleteMenu();
+                                break;
+                            }
+                        case 6:
+                            {
+                                Data.SortStudentbyAge();
+                                break;
+                            }
+                        case 7:
+                            {
                                 isRunning = false;
                                 break;
                             }
@@ -93,6 +103,15 @@ namespace LINQ
                                 throw new FormatException($"{select} is not a valid operation choose only (1-4)");
                             }
                     }
+                }
+
+
+                catch (NotFoundException ex)
+                {
+                    Highlight.Error(ex.Message);
+                    Console.WriteLine();
+                    Console.WriteLine("Stack Trace");
+                    Trace.WriteLine(ex);
                 }
 
                 catch (DuplicateIdException ex)
@@ -163,6 +182,32 @@ namespace LINQ
                 default:
                     {
                         throw new FormatException($"{choose} is not valid please choose only 1-4");
+                    }
+            }
+        }
+
+        private void DeleteMenu()
+        {
+            Console.WriteLine("Delete Menu");
+            Console.WriteLine("1. Delete Student");
+            Console.WriteLine("2. Delete University");
+            int choice = DisplayRead.ReadInt("Choose (1-4)");
+
+            switch (choice)
+            {
+                case 1:
+                    {
+                        Data.DeleteStudent();
+                        break;
+                    }
+                case 2:
+                    {
+                        Data.deleteUniversity();
+                        break;
+                    }
+                default:
+                    {
+                        throw new FormatException($"{choice} is not valid try again");
                     }
             }
         }

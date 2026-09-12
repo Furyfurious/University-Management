@@ -9,11 +9,10 @@ namespace LINQ
     internal class UniversityManager
     {
         
-        private DataHandling Data;
+        private DataHandling Data = new DataHandling();
         private UniversityDisplay DisplayMenu;
         public UniversityManager()
         {
-            Data = new DataHandling();
             DisplayMenu = new UniversityDisplay(Data);
         }
 

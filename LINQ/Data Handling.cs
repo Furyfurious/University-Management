@@ -94,7 +94,38 @@ namespace LINQ
             Students.Add(new Students { ID = id, Name = name, Gender = Gender, Age = Age, UniversityId = uniID });
         }
 
+        //Delete Students
 
+        public void deleteUniversity()
+        {
+            int deleteUniversity = ReadInt("Enter University ID to delete: ");
+
+            if(!Universities.Any(u => u.ID == deleteUniversity))
+            {
+                throw new NotFoundException("University ID cannot be found");
+            }
+
+            Universities.RemoveAll(u => u.ID == deleteUniversity);
+            Students.RemoveAll(s => s.UniversityId == deleteUniversity);
+
+            Console.WriteLine("Deleted Succesfully");
+        }
+
+        public void DeleteStudent()
+        {
+            int deletestudent = ReadInt("Enter student ID to delete: ");
+
+            if(!Students.Any(s => s.ID == deletestudent))
+            {
+                throw new NotFoundException("You can't delete student that does not exist");
+            }
+
+            Students.RemoveAll(s => s.ID == deletestudent);
+
+            Console.WriteLine("Student Successfully deleted");
+        }
+
+        //Find Students
         public void MaleStudents()
         {
             Console.WriteLine();
@@ -116,10 +147,23 @@ namespace LINQ
             Console.WriteLine();
 
             IEnumerable<Students> femaleStudents = from student in Students
-                                                   where student.Gender == "Female"
+                                                   where student.Gender == "Female" || student.Gender == "female"
                                                    select student;
 
             foreach (var student in femaleStudents)
+            {
+                student.Print();
+            }
+        }
+
+        public void SortStudentbyAge()
+        {
+            IEnumerable<Students> SortedAge = from student in Students
+                                              orderby student.Age
+                                              select student;
+
+            Console.WriteLine("Sorted student");
+            foreach (Students student in SortedAge)
             {
                 student.Print();
             }
@@ -140,6 +184,54 @@ namespace LINQ
             foreach (var uni in Universities)
             {
                 uni.Print();
+            }
+        }
+
+        public void AllUPstudents()
+        {
+            IEnumerable<Students> UPstudents = from student in Students
+                                               join University in Universities on student.UniversityId equals University.ID
+                                               where University.Name == "University of the Philippines"
+                                               select student;
+
+            foreach (var student in UPstudents)
+            {
+                student.Print();
+            }
+        }
+
+        public void AllFromthatuni()
+        {
+
+            int find_id = DisplayRead.ReadInt("Enter id to see all student from that uni: ");
+
+            if(!Universities.Any(u => u.ID == find_id))
+            {
+                throw new NotFoundException("The value you enter cannot be found");
+            }
+
+            var Allstudent = from student in Students
+                               join university in Universities on student.UniversityId equals university.ID
+                               where university.ID == find_id
+                               select student;
+
+            foreach (var student in Allstudent)
+            {
+                student.Print();
+            }
+        }
+
+        public void StudentAndUniversityCollection()
+        {
+            var newCollection = from student in Students
+                                join university in Universities on student.UniversityId equals university.ID
+                                orderby student.Name
+                                select new { studentName = student.Name, UniversityName = university.Name };
+
+
+            foreach(var coll in newCollection)
+            {
+                Console.WriteLine($"Student {coll.studentName} from {coll.UniversityName}");
             }
         }
     }

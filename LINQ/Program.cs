@@ -1,11 +1,15 @@
-﻿namespace LINQ
+﻿using System.Collections.Generic;
+namespace LINQ
 {
     internal class Program
     {
         static void Main(string[] args)
         {
             UniversityManager Manager = new UniversityManager();
-            Manager.Show();
+            DataHandling Data = new();
+
+            Data.StudentAndUniversityCollection();
+
 
         }
     }
